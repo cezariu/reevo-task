@@ -1,0 +1,494 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  background: radial-gradient(circle at 30% 20%, #182243, #0b0f1f 45%);
+  color: #e6ebff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: min(1200px, 96vw);
+  padding: 24px;
+}
+
+.title h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+}
+
+.title p {
+  margin: 0 0 16px;
+  opacity: 0.8;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.canvas-shell {
+  background: rgba(18, 24, 48, 0.8);
+  border: 1px solid #1e2a4e;
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+}
+
+#canvas-host {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  max-height: calc(100vh - 200px); /* Ensure it fits on screen */
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #223463;
+  background: #0c0f1e;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  border-radius: 8px;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: auto;
+  object-fit: fill;
+}
+
+#hud {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  background: rgba(9, 12, 24, 0.7);
+  border: 1px solid #1d2d55;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.hud-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 180px;
+}
+
+.hud-row + .hud-row {
+  margin-top: 6px;
+}
+
+#controls {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: rgba(9, 12, 24, 0.95);
+  border: 1px solid #1d2d55;
+  border-radius: 10px;
+  padding: 10px 12px;
+  z-index: 2;
+  max-width: calc(100% - 24px); /* Prevent overflow */
+  box-sizing: border-box;
+}
+
+.controls-mobile {
+  display: none;
+}
+
+.control {
+  display: grid;
+  gap: 4px;
+}
+
+.label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.buttons {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #2a3a63;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+button {
+  background: #2c5bd9;
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+button:hover {
+  background: #3c6af0;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.help {
+  background: rgba(18, 24, 48, 0.8);
+  border: 1px solid #1e2a4e;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.help ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+
+/* Mobile optimizations */
+@media (max-width: 960px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 0;
+  }
+
+  #app {
+    padding: 0;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .title {
+    margin: 0;
+    padding: 2px 4px;
+    flex-shrink: 0;
+    height: auto;
+    min-height: 24px;
+    max-height: 24px;
+  }
+
+  .title h1 {
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .canvas-shell {
+    padding: 0;
+    margin: 0;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    order: 1; /* Place before help */
+  }
+
+  #canvas-host {
+    width: 100%;
+    aspect-ratio: 3 / 2; /* Match playfield aspect ratio (900x600) */
+    max-width: 100vw;
+    max-height: calc(70vh - 80px); /* Account for title and controls */
+    min-height: 0;
+    overflow: hidden;
+    margin: auto; /* Center the canvas */
+    align-self: center; /* Center in flex container */
+  }
+
+  .controls-inline {
+    display: none !important;
+  }
+
+  .controls-mobile {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(9, 12, 24, 0.98);
+    border-top: 1px solid #1d2d55;
+    padding: 10px 12px;
+    gap: 12px;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    min-height: 70px;
+  }
+
+  #hud {
+    font-size: 16px;
+    padding: 10px 12px;
+    left: 10px;
+    top: 10px;
+    max-width: calc(100% - 20px);
+    background: rgba(9, 12, 24, 0.95);
+    border: 2px solid #1d2d55;
+    border-radius: 10px;
+  }
+
+  .hud-row {
+    min-width: auto;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .controls-mobile .control {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .controls-mobile .label {
+    font-size: 11px;
+    white-space: nowrap;
+    text-align: center;
+    display: block;
+    opacity: 0.9;
+  }
+
+  .controls-mobile .buttons {
+    gap: 10px;
+    padding: 4px 8px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #2a3a63;
+    border-radius: 8px;
+  }
+
+  .controls-mobile button {
+    padding: 8px 12px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 18px;
+    flex-shrink: 0;
+    border-radius: 6px;
+  }
+
+  .controls-mobile span:not(.label) {
+    min-width: 50px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .help {
+    display: block;
+    background: rgba(18, 24, 48, 0.9);
+    border: 1px solid #1e2a4e;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin: 8px 10px;
+    font-size: 11px;
+    order: 2; /* Place after canvas in flex container */
+  }
+
+  .help ul {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.4;
+  }
+
+  .help li {
+    margin-bottom: 4px;
+  }
+
+  .help li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 550px) {
+  .title {
+    margin: 6px;
+  }
+
+  .title h1 {
+    font-size: 18px;
+  }
+
+  .canvas-shell {
+    padding: 4px;
+    margin: 0 4px;
+  }
+
+  #canvas-host {
+    height: 70vh;
+    max-height: 70vh;
+  }
+
+  #hud {
+    font-size: 10px;
+    padding: 3px 5px;
+    left: 4px;
+    top: 4px;
+  }
+
+  .hud-row {
+    gap: 3px;
+    font-size: 10px;
+  }
+
+  #controls {
+    bottom: 4px;
+    padding: 6px 8px;
+    gap: 6px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    width: calc(100% - 8px);
+    max-width: calc(100% - 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .control {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .label {
+    font-size: 11px;
+    text-align: center;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .buttons {
+    justify-content: center;
+    width: 100%;
+  }
+
+  button {
+    padding: 5px 8px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 13px;
+  }
+
+  .buttons {
+    gap: 3px;
+    padding: 2px 3px;
+  }
+
+  .help {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
+
+/* Very small devices (portrait phones) */
+@media (max-width: 360px) {
+  #canvas-host {
+    max-height: calc(100vh - 320px);
+    min-height: 200px;
+  }
+
+  #controls {
+    padding: 8px 6px;
+    gap: 8px;
+  }
+
+  .label {
+    font-size: 10px;
+  }
+
+  button {
+    min-width: 44px;
+    padding: 6px 8px;
+  }
+}
+
+/* Improve touch targets */
+button {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+}
+
+
+/* Ensure proper mobile layout */
+@media (max-width: 960px) {
+  html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+}
+

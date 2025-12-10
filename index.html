@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Falling Shapes - Pixi</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="title">
+        <h1>Falling Shapes</h1>
+      </header>
+      <main class="layout">
+        <div class="canvas-shell">
+          <div id="hud">
+            <div class="hud-row">
+              <span>Shapes:</span>
+              <span id="shape-count">0</span>
+            </div>
+            <div class="hud-row">
+              <span>Surface area:</span>
+              <span id="shape-area">0 px²</span>
+            </div>
+          </div>
+          <div id="canvas-host" aria-label="Falling shapes canvas"></div>
+          <div id="controls" class="controls-inline">
+            <div class="control">
+              <span class="label">Spawn / sec</span>
+              <div class="buttons">
+                <button id="spawn-dec">-</button>
+                <span id="spawn-rate">1</span>
+                <button id="spawn-inc">+</button>
+              </div>
+            </div>
+            <div class="control">
+              <span class="label">Gravity</span>
+              <div class="buttons">
+                <button id="grav-dec">-</button>
+                <span id="grav-value">400</span>
+                <button id="grav-inc">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="controls-mobile" class="controls-mobile">
+          <div class="control">
+            <span class="label">Spawn / sec</span>
+            <div class="buttons">
+              <button id="spawn-dec-mobile">-</button>
+              <span id="spawn-rate-mobile">1</span>
+              <button id="spawn-inc-mobile">+</button>
+            </div>
+          </div>
+          <div class="control">
+            <span class="label">Gravity</span>
+            <div class="buttons">
+              <button id="grav-dec-mobile">-</button>
+              <span id="grav-value-mobile">400</span>
+              <button id="grav-inc-mobile">+</button>
+            </div>
+          </div>
+        </div>
+        <aside class="help">
+          <ul>
+            <li>Tap/Click inside the rectangle to spawn a new shape at that position.</li>
+            <li>Tap/Click any shape to remove it.</li>
+            <li>Use the controls to tune spawn rate and gravity.</li>
+          </ul>
+        </aside>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+
